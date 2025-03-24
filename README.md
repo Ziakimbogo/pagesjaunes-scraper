@@ -1,6 +1,6 @@
 # 🍽️ PagesJaunes Scraper
 
-Un outil de scraping pour collecter les informations des restaurants sur PagesJaunes, en identifiant spécifiquement ceux qui n'ont pas de site web.
+Un outil de scraping pour collecter les informations des enseignes sur PagesJaunes, en identifiant spécifiquement ceux qui n'ont pas de site web.
 
 ## 📋 Fonctionnalités
 
