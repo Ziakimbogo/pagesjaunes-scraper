@@ -1,4 +1,4 @@
-# 🍽️ PagesJaunes Restaurant Scraper
+# 🍽️ PagesJaunes Scraper
 
 Un outil de scraping pour collecter les informations des restaurants sur PagesJaunes, en identifiant spécifiquement ceux qui n'ont pas de site web.
 
@@ -13,7 +13,7 @@ Un outil de scraping pour collecter les informations des restaurants sur PagesJa
 
 ```bash
 # Cloner le dépôt
-git clone https://github.com/votre-username/pagesjaunes-scraper.git
+git clone https://github.com/Ziakimbogo/pagesjaunes-scraper.git
 cd pagesjaunes-scraper
 
 # Installer les dépendances
@@ -26,8 +26,10 @@ npm install puppeteer
 // Exemple d'utilisation
 const { scrapEntreprises } = require('./pagesjaunes-scraper');
 
-// Rechercher des restaurants dans la Moselle (3 pages maximum)
-scrapEntreprises('Moselle', 'restaurants', 3);
+// Rechercher des restaurants dans l'Aisne (3 pages maximum)
+scrapEntreprises('Aisne', 'restaurants', 3);
+
+// Possible de mettre un departement, une région ou meme une ville
 ```
 
 ## 📊 Résultats
@@ -99,7 +101,7 @@ Téléphone: 03 87 51 42 64
 Le script fonctionne en :
 
 1. **Naviguant** sur les pages de résultats de PagesJaunes
-2. **Visitant** la page de détail de chaque restaurant
+2. **Visitant** la page de détail de chaque enseigne
 3. **Extrayant** les informations pertinentes
 4. **Identifiant** les sites web via l'attribut `title="Site internet du professionnel nouvelle fenêtre"`
 5. **Générant** les fichiers de sortie avec les données structurées
