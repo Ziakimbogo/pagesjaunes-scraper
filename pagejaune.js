@@ -18,7 +18,7 @@ async function scrapEntreprises(location, category, maxPages = 5) {
 
   try {
 
-    let baseUrl = `https://www.pagesjaunes.fr/annuaire/chercherlspros?quoiqui=${encodeURIComponent(category)}&ou=${encodeURIComponent(location)}`;
+    let baseUrl = `https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=${encodeURIComponent(category)}&ou=${encodeURIComponent(location)}`;
 
 
     for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
