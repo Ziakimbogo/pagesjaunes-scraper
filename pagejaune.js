@@ -139,7 +139,8 @@ async function scrapEntreprises(location, category, maxPages = 5) {
 
 
       const hasNextPage = await page.evaluate(() => {
-        return !!document.querySelector('.pagination .next:not(.disabled)');
+        const nextPageLink = document.querySelector('a.next');
+        return !!nextPageLink;
       });
 
       if (!hasNextPage) {
