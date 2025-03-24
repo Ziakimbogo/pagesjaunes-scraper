@@ -18,7 +18,7 @@ async function scrapEntreprises(location, category, maxPages = 5) {
 
   try {
 
-    let baseUrl = `https://www.pagesjaunes.fr/annuaire/chercherlespros?quoiqui=${encodeURIComponent(category)}&ou=${encodeURIComponent(location)}`;
+    let baseUrl = `https://www.pagesjaunes.fr/annuaire/chercherlspros?quoiqui=${encodeURIComponent(category)}&ou=${encodeURIComponent(location)}`;
 
 
     for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
@@ -68,12 +68,9 @@ async function scrapEntreprises(location, category, maxPages = 5) {
         console.log(`🏢 Visite de ${name} (${i + 1}/${detailLinks.length})`);
 
         try {
-
           await page.goto(link, { waitUntil: 'networkidle2', timeout: 60000 });
 
-
-          const detailsInfo = await page.evaluate(() => {
-
+          const detailsInfo = await page.evaluate(async () => {
             const cleanText = text => {
               if (!text) return '';
               return text.replace(/Contenu édité par le professionnel.*$/g, '')
@@ -83,26 +80,30 @@ async function scrapEntreprises(location, category, maxPages = 5) {
                 .trim();
             };
 
-
             const nameElement = document.querySelector('h1');
             const name = nameElement ? cleanText(nameElement.textContent) : '';
-
 
             const addressElement = document.querySelector('.address-container') ||
               document.querySelector('.address') ||
               document.querySelector('.bi-address');
             const address = addressElement ? cleanText(addressElement.textContent) : '';
 
-
             let phone = '';
-            const phoneElement = document.querySelector('[data-testid="SeePhoneNumber"], .tel');
-            if (phoneElement) {
-              const phoneText = phoneElement.textContent;
-              if (!phoneText.includes('Afficher')) {
-                phone = cleanText(phoneText);
+            const phoneButton = document.querySelector('a[title="Afficher le N°"]');
+
+            if (phoneButton) {
+              phoneButton.click();
+              await new Promise(resolve => setTimeout(resolve, 500));
+              const phoneNumberElement = document.querySelector('.coord-numero');
+              if (phoneNumberElement) {
+                phone = cleanText(phoneNumberElement.textContent);
+              }
+            } else {
+              const phoneElement = document.querySelector('.coord-numero');
+              if (phoneElement) {
+                phone = cleanText(phoneElement.textContent);
               }
             }
-
 
             const websiteLink = document.querySelector('a[title="Site internet du professionnel nouvelle fenêtre"]');
             let siteWeb = 'Non';
