@@ -23,7 +23,8 @@ async function scrapEntreprises(location, category, maxPages = 5) {
 
     for (let pageNum = 1; pageNum <= maxPages; pageNum++) {
       const pageUrl = pageNum > 1 ? `${baseUrl}&page=${pageNum}` : baseUrl;
-      console.log(`📄 Page ${pageNum}/${maxPages}`);
+      console.log(`📄 Navigation vers la Page ${pageNum}/${maxPages}`);
+      console.log(`🔗 URL: ${pageUrl}`);
 
 
       await page.goto(pageUrl, { waitUntil: 'networkidle2', timeout: 120000 });
@@ -137,14 +138,11 @@ async function scrapEntreprises(location, category, maxPages = 5) {
         }
       }
 
-
-      const hasNextPage = await page.evaluate(() => {
-        const nextPageLink = document.querySelector('a.next');
-        return !!nextPageLink;
-      });
-
-      if (!hasNextPage) {
-        console.log("🏁 Dernière page atteinte");
+      if (pageNum < maxPages) {
+        console.log(`✅ Page ${pageNum} terminée, passage à la page suivante...`);
+        console.log(`⏭️ Navigation vers la page ${pageNum + 1}/${maxPages}`);
+      } else {
+        console.log("🏁 Nombre maximum de pages atteint");
         break;
       }
     }
@@ -219,6 +217,6 @@ async function scrapEntreprises(location, category, maxPages = 5) {
 }
 
 
-scrapEntreprises('Paris', 'restaurants', 3); // Ville / enseigne / nombre de pages
+scrapEntreprises('Toulouse', 'restaurants', 4); // Ville / enseigne / nombre de pages
 
 module.exports = { scrapEntreprises };
